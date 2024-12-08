@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mv="clr-namespace:ListaTareasApp.MVVM.ViewModels"
+             x:Class="ListaTareasApp.MVVM.Views.MainPage">
+
+    <ContentPage.BindingContext>
+        <mv:VistaModeloTarea/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout  Margin="10, 10, 10, 10">
+            <Label x:Name="TituloMain" Text="To do"
+				   FontFamily="Schoolbell-Regular"
+                   FontSize="Large"
+				   TextTransform="Uppercase"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="10, 10, 10, 15"/>
+
+            <!-- CollectionView_SelectionChanged es un metódo autogenerado por eso esta en el .cs de la propia view-->
+            <CollectionView ItemsSource="{Binding Tareas}" 
+                SelectionMode="Single" 
+                SelectedItem="{Binding TareaSeleccionada}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <!-- VisualStateManager -->
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="Lavender"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <SwipeView>
+                                <SwipeView.LeftItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Editar"
+                                       BackgroundColor="LightPink"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type mv:VistaModeloTarea}}, Path=ComandoCambiarPag}" 
+                                        CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+
+                                <HorizontalStackLayout Margin="5" Padding="5">
+                                    <Grid ColumnDefinitions="Auto,Auto,*,Auto" RowDefinitions="Auto">
+                                        <!-- Column 0: "Conseguido :)" Label -->
+                                        <Label Grid.Column="0"
+                                   Text="Conseguido :)" 
+                                   HorizontalOptions="Center" 
+                                   VerticalOptions="Center"    
+                                   FontFamily="Schoolbell-Regular" 
+                                   FontSize="Small"/>
+
+                                        <!-- Column 1: Switch -->
+                                        <Switch Grid.Column="1"
+                                    IsToggled="{Binding EstaCompletada}" 
+                                    Style="{StaticResource SwitchStyle}"/>
+
+                                        <!-- Column 2: Tarea Nombre Label -->
+                                        <Label Grid.Column="2"
+                                   Text="{Binding Nombre}" 
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="StartAndExpand"/>
+
+                                        <!-- Column 3: Delete Button -->
+                                        <Button Grid.Column="3"
+                                    Text="Borrar" 
+                                    FontFamily="Schoolbell-Regular" 
+                                    FontSize="Small"
+                                     Command="{Binding Source={RelativeSource AncestorType={x:Type mv:VistaModeloTarea}}, Path=ComandoBorrartarea}" 
+                                    CommandParameter="{Binding .}"
+                                    Style="{StaticResource BtnStyle}"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"/>                                
+                                    </Grid>
+                                </HorizontalStackLayout>
+                            </SwipeView>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Tarea nueva "
+                    FontFamily="Schoolbell-Regular" FontSize="Small"
+                    Command="{Binding ComandoAniadirtarea}"
+                    Style="{StaticResource BtnStyle}"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
