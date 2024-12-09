@@ -3,26 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mvc="clr-namespace:ListaTareasApp.MVVM.ViewModels"
              x:Class="ListaTareasApp.MVVM.Views.Pagina2"
-             Title="Editar Tarea">
+             Title="Editar Tarea"
+             BackgroundImageSource="flores2.jpg"
+              NavigationPage.HasNavigationBar ="False"       >
 
- <ContentPage.BindingContext>
+    <ContentPage.BindingContext>
         <mvc:VistaModeloTarea/>
     </ContentPage.BindingContext>
 
-  <ScrollView> 
-    <Grid RowDefinitions="Auto, *" Padding="10">
-        <VerticalStackLayout Padding="10">
-                <CheckBox IsChecked="{Binding TareaSeleccionada.EstaCompletada}" 
+    <ScrollView>
+        <Grid RowDefinitions="Auto, *" Padding="10">
+            <VerticalStackLayout Padding="10">
+                <HorizontalStackLayout>
+                    <CheckBox IsChecked="{Binding TareaSeleccionada.EstaCompletada}" 
                                   Style="{StaticResource CbStyle}"/>
-                <Entry  Text="{Binding TareaSeleccionada.EstaCompletada}" 
+                    <Entry  Text="{Binding TareaSeleccionada.Nombre}" 
                 Placeholder="Escribir aquí" 
                 Style="{StaticResource EntryStyle}"/>
-          
-            <Button Text="Guardar" 
+                </HorizontalStackLayout>
+                <Button Text="Guardar" 
                 Command="{Binding SaveTaskCommand}"
                 Clicked="Button_Clicked"
                 Style="{StaticResource BtnStyle}"/>
-        </VerticalStackLayout>
-    </Grid>
-  </ScrollView>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>
